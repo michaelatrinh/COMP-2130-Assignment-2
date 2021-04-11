@@ -9,8 +9,97 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script>
+// line 12 to 77 makes the alien move right when press right and stop when press down
+            var stepNumber = 11;
+            var moveTimer = null;
+          
+            function moveRight()
+            {
+                step()
+                alien.style.left = parseInt(alien.style.left) + 1 + "px"
+            }
+            function jumpUp()
+            {
+                alien.style.top = parseInt(alien.style.top) - 1 + "px"
+            }
 
-        window.onload = function startAnim(){
+            function moveLeft()
+            {
+                alien.style.left = parseInt(alien.style.left) - 1 + "px"
+                step()
+            }            
+            function step()
+            {
+                stepNumber++       
+                if(stepNumber > 30)
+                {
+                    stepNumber = 0   
+                }
+
+                alien.src = "images/alien/alienrwalk" + stepNumber + ".gif"
+            }
+
+            function setUp()
+            {
+                myAlien = document.getElementById("al")
+            }
+
+            function stopMoving()
+            {
+                if(moveTimer != null)
+                {
+                    // alien was moving, now let's stop it
+                    clearInterval(moveTimer)
+                    moveTimer = null
+                }
+            }
+
+            function handleKeyDown(myEvent)
+            {
+              
+                if(myEvent.which == 39)   
+                {
+                    if(moveTimer == null)
+                    {
+                        moveTimer = setInterval(moveRight, 20)
+                }
+                else
+                {
+                    clearInterval(movetimer)
+                    movetimer =null
+                    
+                }
+            }
+              else if(myEvent.which == 37) // left-arrow key
+                {
+                    if(timer == null)
+                    {
+                        movetimer = setInterval(moveLeft, 20)
+                    }
+                    else    
+                    {
+                        clearInterval(movetimer)
+                        movetimer = null
+                    }                    
+                }
+                else if(myEvent.which == 40)
+                {
+                    // press down to stop moving
+                    if(moveTimer != null)
+                    {
+     
+                        clearInterval(moveTimer)
+                        moveTimer = null
+                    }
+                }
+
+            }
+
+            window.onload=setUp
+            window.onkeydown=handleKeyDown
+/*
+
+            window.onload = function startAnim(){
             var stepNumber = 11;
             var moveTimer = null;
             var alien = document.querySelector("#alien");
@@ -77,8 +166,6 @@
                 alien.src = "images/alien/alienlwalk" + stepNumber + ".gif"
             }
         }
-
-
 // ----------------------------------------------------------------------------- //
 
 /*
@@ -124,7 +211,7 @@
 -->
 
     <style>
-        body{
+/*    body{
             width: 100vw;
             height: 100vh;
             display: flex;
@@ -133,12 +220,13 @@
         }
 
         #a{
-            position: absolute;
+            position: relative;
         }
+        */
     </style>
 
 </head>
 <body>
-    <img src="images/alien/alienrwalk11.gif" id="alien" alt="alien">
+    <img src="images/alien/alienrwalk11.gif" id="alien" alt="alien" style="position:absolute;left:9px;top:200px">
 </body>
 </html>
