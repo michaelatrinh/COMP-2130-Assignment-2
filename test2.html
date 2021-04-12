@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment 02</title>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+    <title>test 2</title>
     <script>
         var stepNumber = 11
         var moveTimer = null
@@ -43,7 +36,6 @@
                 moveTimer = setInterval(moveLeft, 20);
             }
         }
-
 
         function jumpUp()
         {
@@ -81,6 +73,7 @@
 
         function handleKeyPress(myEvent)
         {
+
             if(myEvent.which == 39) // right-arrow key
             {
                 if(moveTimer == null)
@@ -118,16 +111,15 @@
                     clearInterval(moveTimer);
                     moveTimer = null;
                     
-                }
+                } 
             }
             else if(myEvent.which == 40)
             {
                 // press down to stop moving
                 if(moveTimer != null)
                 {
-    
-                    clearInterval(moveTimer)
-                    moveTimer = null
+                    clearInterval(moveTimer);
+                    moveTimer = null;
                 }
             }
         }
@@ -135,23 +127,8 @@
         onload=toggleMoving
     </script>
 
-    <style>
-/*    body{
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #a{
-            position: relative;
-        }
-        */
-    </style>
-
 </head>
 <body>
-    <img src="images/alien/alienrwalk11.gif" id="a" alt="alien" style="position:absolute;left:200px;top:200px">
+    <img src="images/alien/alienrwalk11.gif" id="a" alt="alien" style="position:absolute;left:9px;top:200px">
 </body>
 </html>
