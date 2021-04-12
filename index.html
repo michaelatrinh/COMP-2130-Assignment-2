@@ -42,8 +42,17 @@
                 clearInterval(moveTimer);
                 moveTimer = setInterval(moveLeft, 20);
             }
-        }
 
+            let box = document.querySelector("#box");
+            if(box.getBoundingClientRect().left == alien.getBoundingClientRect().right){
+                if(box.style.height > alien.style.height){
+                    clearInterval(moveTimer);
+                    moveTimer = setInterval(moveLeft, 20);
+                } else{
+                    box.style.left = parseInt(box.style.left) + 1 + "px";
+                }
+            }
+        }
 
         function jumpUp()
         {
@@ -54,6 +63,13 @@
             setTimeout(function jumpDown(){
                 alien.style.transform = 'translateY(0px)';
             }, 1000);
+
+            // clearTimeout(moveTimer);
+            // moveTimer = null;
+
+            if(alien.getBoundingClientRect().bottom == box.getBoundingClientRect().top){
+                box.src = "images/explodes.gif";
+            }
         }
 
         function moveLeft()
@@ -64,6 +80,16 @@
             if(alien.getBoundingClientRect().left == 0){
                 clearInterval(moveTimer);
                 moveTimer = setInterval(moveRight, 20);
+            }
+
+            let box = document.querySelector("#box");
+            if(box.getBoundingClientRect().right == alien.getBoundingClientRect().left){
+                if(box.style.height > alien.style.height){
+                    clearInterval(moveTimer);
+                    moveTimer = setInterval(moveRight, 20);
+                } else{
+                    box.style.left = parseInt(box.style.left) - 1 + "px";
+                }
             }
         }            
 
@@ -81,6 +107,7 @@
 
         function handleKeyPress(myEvent)
         {
+
             if(myEvent.which == 39) // right-arrow key
             {
                 if(moveTimer == null)
@@ -117,17 +144,15 @@
                 {
                     clearInterval(moveTimer);
                     moveTimer = null;
-                    
-                }
+                } 
             }
             else if(myEvent.which == 40)
             {
                 // press down to stop moving
                 if(moveTimer != null)
                 {
-    
-                    clearInterval(moveTimer)
-                    moveTimer = null
+                    clearInterval(moveTimer);
+                    moveTimer = null;
                 }
             }
         }

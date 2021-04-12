@@ -56,6 +56,13 @@
             setTimeout(function jumpDown(){
                 alien.style.transform = 'translateY(0px)';
             }, 1000);
+
+            clearTimeout(moveTimer);
+            moveTimer = null;
+
+            if(alien.getBoundingClientRect().bottom == box.getBoundingClientRect().top){
+                box.src = "images/explodes.gif";
+            }
         }
 
         function moveLeft()
@@ -130,7 +137,6 @@
                 {
                     clearInterval(moveTimer);
                     moveTimer = null;
-                    
                 } 
             }
             else if(myEvent.which == 40)
@@ -149,6 +155,6 @@
 
 </head>
 <body>
-    <img src="images/alien/alienrwalk11.gif" id="a" alt="alien" style="position:absolute;left:320px;top:20px">
+    <img src="images/alien/alienrwalk11.gif" id="a" alt="alien" style="position:absolute;left:320px;top:200px">
 </body>
 </html>
