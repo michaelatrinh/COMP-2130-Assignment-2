@@ -35,6 +35,16 @@
                 clearInterval(moveTimer);
                 moveTimer = setInterval(moveLeft, 20);
             }
+
+            let box = document.querySelector("#box");
+            if(box.getBoundingClientRect().left == alien.getBoundingClientRect().right){
+                if(box.style.height > alien.style.height){
+                    clearInterval(moveTimer);
+                    moveTimer = setInterval(moveLeft, 20);
+                } else{
+                    box.style.left = parseInt(box.style.left) + 1 + "px";
+                }
+            }
         }
 
         function jumpUp()
@@ -56,6 +66,16 @@
             if(alien.getBoundingClientRect().left == 0){
                 clearInterval(moveTimer);
                 moveTimer = setInterval(moveRight, 20);
+            }
+
+            let box = document.querySelector("#box");
+            if(box.getBoundingClientRect().right == alien.getBoundingClientRect().left){
+                if(box.style.height > alien.style.height){
+                    clearInterval(moveTimer);
+                    moveTimer = setInterval(moveRight, 20);
+                } else{
+                    box.style.left = parseInt(box.style.left) - 1 + "px";
+                }
             }
         }            
 
@@ -129,6 +149,6 @@
 
 </head>
 <body>
-    <img src="images/alien/alienrwalk11.gif" id="a" alt="alien" style="position:absolute;left:9px;top:200px">
+    <img src="images/alien/alienrwalk11.gif" id="a" alt="alien" style="position:absolute;left:320px;top:20px">
 </body>
 </html>
