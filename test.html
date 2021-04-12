@@ -1,0 +1,123 @@
+<html>
+    <head>
+        <title>test</title>
+        <script>
+            var stepNumber = 11
+            var moveTimer = null
+
+            function step()
+            {
+                stepNumber = stepNumber + 1
+                if(stepNumber >= 30)
+                {
+                    stepNumber = 0
+                }
+                alien.src = "images/alien/alienrwalk" + stepNumber + ".gif"
+            }
+
+            function moveRight()
+            {
+                alien.style.left = parseInt(alien.style.left) + 1 + "px"
+                step()
+            }
+
+
+            function jumpUp()
+            {
+                alien.style.top = parseInt(alien.style.top) - 1 + "px"
+            }
+
+            function jumpDown()
+            {
+                alien.style.top = parseInt(alien.style.top) + 1 + "px"
+            }
+
+            function moveLeft()
+            {
+                alien.style.left = parseInt(alien.style.left) - 1 + "px"
+                step()
+            }            
+
+            function toggleMoving()
+            {
+                alien = document.getElementById("a")
+
+                alien.onclick=function(myEvent)
+                {
+                
+                }
+
+                window.onkeydown=handleKeyPress
+            }
+
+            function handleKeyPress(myEvent)
+            {
+
+                if(myEvent.which == 39) // right-arrow key
+                {
+                    if(moveTimer == null)
+                    {
+                        moveTimer = setInterval(moveRight, 20)
+                    }
+                    else    
+                    {
+                        clearInterval(moveTimer)
+                        moveTimer = null
+                    }
+                }
+                else if(myEvent.which == 37) // left-arrow key
+                {
+                    if(moveTimer == null)
+                    {
+                        moveTimer = setInterval(moveLeft, 20)
+                    }
+                    else    
+                    {
+                        clearInterval(moveTimer)
+                        moveTimer = null
+                    }                    
+                }
+                else if(myEvent.which == 38) // up-arrow key
+                {
+                    if(moveTimer == null)
+                    {
+                        moveTimer = setInterval(jumpUp, 20)
+                        
+                        
+                    }
+                    else    
+                    {
+                        clearInterval(moveTimer)
+                        moveTimer = null
+                    }                    
+                }
+                else if(myEvent.which == 40)
+                {
+                    // press down to stop moving
+                    if(moveTimer != null)
+                    {
+     
+                        clearInterval(moveTimer)
+                        moveTimer = null
+                    }
+                }
+            }
+
+
+            /*function jump(){
+                alien.style.transform += 'translateY(-100px)'
+                alien.style.transition = '0.5s ease-out'
+
+                setTimeout(function jumpDown(){
+                    alien.style.transform -= 'translateY(100px)';
+                }, 1000)
+            }
+*/
+
+            onload=toggleMoving
+        </script>
+    </head>
+    <body>
+        <img src="images/alien/alienrwalk11.gif" id="a" style="position:absolute;left:8px; top:300px">
+    </body>
+</html>
