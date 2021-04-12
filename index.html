@@ -10,10 +10,20 @@
 
     <script>
 // line 12 to 77 makes the alien move right when press right and stop when press down
-            var stepNumber = 11;
-            var moveTimer = null;
-          
-            function step()
+var stepNumber = 11
+            var moveTimer = null
+
+            function stepRight()
+            {
+                stepNumber = stepNumber + 1
+                if(stepNumber >= 30)
+                {
+                    stepNumber = 0
+                }
+                alien.src = "images/alien/alienrwalk" + stepNumber + ".gif"
+            }
+
+            function stepLeft()
             {
                 stepNumber++       
                 if(stepNumber > 30)
@@ -21,71 +31,86 @@
                     stepNumber = 0   
                 }
 
-                alien.src = "images/alien/alienrwalk" + stepNumber + ".gif"
+                alien.src = "images/alien/alienlwalk" + stepNumber + ".gif"
             }
-            
+
             function moveRight()
             {
-                step()
                 alien.style.left = parseInt(alien.style.left) + 1 + "px"
+                stepRight();
             }
+
+
             function jumpUp()
-            {
-                alien.style.top = parseInt(alien.style.top) - 1 + "px"
-            }
+        {
+            //alien.style.top = parseInt(alien.style.top) - 1 + "px";
+            alien.style.transform = 'translateY(-100px)';
+            alien.style.transition = '0.5s ease-out';
+
+            setTimeout(function jumpDown(){
+                alien.style.transform = 'translateY(0px)';
+            }, 1000);
+        }
 
             function moveLeft()
             {
                 alien.style.left = parseInt(alien.style.left) - 1 + "px"
-                step()
+                stepLeft();
             }            
-          
 
-            function setUp()
+            function toggleMoving()
             {
-                myAlien = document.getElementById("al")
-            }
+                alien = document.getElementById("a")
 
-            function stopMoving()
-            {
-                if(moveTimer != null)
+                alien.onclick=function(myEvent)
                 {
-                    // alien was moving, now let's stop it
-                    clearInterval(moveTimer)
-                    moveTimer = null
+                
                 }
+
+                window.onkeydown=handleKeyPress
             }
 
-            
-            function handleKeyDown(myEvent)
+            function handleKeyPress(myEvent)
             {
-              
-                if(myEvent.which == 39)   
+
+                if(myEvent.which == 39) // right-arrow key
                 {
                     if(moveTimer == null)
                     {
                         moveTimer = setInterval(moveRight, 20)
-                }
-                else
-                {
-                    clearInterval(movetimer)
-                    movetimer =null
-                    
-                }
-            }
-              else if(myEvent.which == 37) // left-arrow key
-                {
-                    if(movetimer == null)
-                    {
-                        movetimer = setInterval(moveLeft, 20)
                     }
                     else    
                     {
-                        clearInterval(movetimer)
-                        movetimer = null
+                        clearInterval(moveTimer)
+                        moveTimer = null
+                    }
+                }
+                else if(myEvent.which == 37) // left-arrow key
+                {
+                    if(moveTimer == null)
+                    {
+                        moveTimer = setInterval(moveLeft, 20)
+                    }
+                    else    
+                    {
+                        clearInterval(moveTimer)
+                        moveTimer = null
                     }                    
                 }
-                
+                else if(myEvent.which == 38) // up-arrow key
+                {
+                    if(moveTimer == null)
+                    {
+                        moveTimer = setTimeout(jumpUp, 1)
+                        
+                        
+                    }
+                    else    
+                    {
+                        clearInterval(moveTimer)
+                        moveTimer = null
+                    }                    
+                }
                 else if(myEvent.which == 40)
                 {
                     // press down to stop moving
@@ -96,146 +121,10 @@
                         moveTimer = null
                     }
                 }
-
-                else if(MyEvent.which == 38) // up-arrow key
-                {
-                    if(movetimer == null)
-                    {
-                        movetimer = setInterval(jumpUp, 20)
-                    }
-                    else    
-                    {
-                        clearInterval(movetimer)
-                        movetimer = null
-                    }                    
-                }
             }
 
-            function jump(){
-                alien.style.transform += 'translateY(-100px)'
-                alien.style.transition = '0.5s ease-out'
-
-                setTimeout(function jumpDown(){
-                    alien.style.transform -= 'translateY(100px)';
-                }, 1000)
-            }
-
-
-            window.onload=setUp
-            window.onkeydown=handleKeyDown
-
-/*
-
-            window.onload = function startAnim(){
-            var stepNumber = 11;
-            var moveTimer = null;
-            var alien = document.querySelector("#alien");
-
-            document.addEventListener("keypress", handleKeyPress);
-
-            function handleKeyPress(key){
-                if(key.which == 37){ // left arrow
-                    if(moveTimer == null){
-                        moveTimer = setInterval(moveLeft, 20);
-                    } else{
-                        clearInterval(moveTimer);
-                        moveTimer = setInterval(moveLeft, 20);
-                    }
-                } else if(key.which == 39){ // right arrow
-                    if(moveTimer == null){
-                        moveTimer = setInterval(moveRight, 20);
-                    } else{
-                        clearInterval(moveTimer);
-                        moveTimer = setInterval(moveRight, 20);
-                    }
-                } else if(key.which == 38){ // up arrow
-                    jump();
-                }
-            }
-            
-            function jump(){
-                alien.style.transform += 'translateY(-100px)'
-                alien.style.transition = '0.5s ease-out'
-
-                setTimeout(function jumpDown(){
-                    alien.style.transform -= 'translateY(100px)';
-                }, 1000)
-            }
-
-            function moveRight(){
-                alien.style.left = parseInt(alien.style.left) + 1 + "px";
-
-                stepRight();
-            }
-
-            function stepRight(){
-                stepNumber++;
-                if(stepNumber > 30){
-                    stepNumber = 0;
-                }
-
-                alien.src = "images/alien/alienrwalk" + stepNumber + ".gif";
-            }
-
-            function moveLeft(){
-                alien.style.right = parseInt(alien.style.right) + 1 + "px";
-            
-                stepLeft();
-            }        
-            
-            function stepLeft(){
-                stepNumber++;
-                if(stepNumber > 30)
-                {
-                    stepNumber = 0 ;
-                }
-
-                alien.src = "images/alien/alienlwalk" + stepNumber + ".gif"
-            }
-        }
-// ----------------------------------------------------------------------------- //
-
-/*
-        function startAnim(){
-            alien = document.getElementById("a");
-
-            window.onkeydown=handleKeyPress;
-        }
-
-
-
-        function moveRight(){
-            stepRight();
-
-            alien.style.left = parseInt(alien.style.left) + 1 + "px";
-        }
-
-            */
-
+            onload=toggleMoving
     </script>
-
-<!--
-    <script>
-        $(document).ready(() => {
-            $(() => {
-                $(StepNumber) = 1;
-                $(TheAlien) = $('#alien');
-                $(Tick) = null;
-
-                $(window).keypress((KeyboardClick) => {
-                    if(KeyboardClick.which == 38){
-                        if(Tick == null){
-                            $(Tick).setInterval(() => {
-                                $(TheAlien).css()
-                            }, 5);
-                        }
-                    }
-                })
-
-            }) 
-        });
-    </script>
--->
 
     <style>
 /*    body{
@@ -254,6 +143,6 @@
 
 </head>
 <body>
-    <img src="images/alien/alienrwalk11.gif" id="alien" alt="alien" style="position:absolute;left:9px;top:200px">
+    <img src="images/alien/alienrwalk11.gif" id="a" alt="alien" style="position:absolute;left:9px;top:200px">
 </body>
 </html>
